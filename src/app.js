@@ -6,6 +6,9 @@ import userRoutes from "./routes/users"
 //middleware de express
 import morgan from "morgan"
 import pkg from "../package.json";
+import cors from "cors";
+import helmet from "helmet";
+
 
 const app= express();
 
@@ -13,6 +16,10 @@ app.set("pkg", pkg);
 
 app.use(express.json());
 app.use(morgan(("dev")))
+app.use(cors())
+app.use(helmet());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
     res.json({
