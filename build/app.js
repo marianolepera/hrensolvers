@@ -17,6 +17,10 @@ var _morgan = _interopRequireDefault(require("morgan"));
 
 var _package = _interopRequireDefault(require("../package.json"));
 
+var _cors = _interopRequireDefault(require("cors"));
+
+var _helmet = _interopRequireDefault(require("helmet"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //middleware de express
@@ -24,6 +28,12 @@ var app = (0, _express.default)();
 app.set("pkg", _package.default);
 app.use(_express.default.json());
 app.use((0, _morgan.default)("dev"));
+app.use((0, _cors.default)());
+app.use((0, _helmet.default)());
+app.use(_express.default.json());
+app.use(_express.default.urlencoded({
+  extended: false
+}));
 app.get("/", (req, res) => {
   res.json({
     message: "Bienvenido a mi crud de notas",
