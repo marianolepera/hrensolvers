@@ -4,18 +4,13 @@ import jwt from "jsonwebtoken";
 
 export const signUp = async (req, res) => {
     try {
-        // Getting the Request Body
         const {email, password } = req.body;
-        // Creating a new User Object
         const newUser = new User({
           email,
           password: await User.encryptPassword(password),
         });
     
-        // Saving the User Object in Mongodb
         const savedUser = await newUser.save();
-    
-        // Create a token
         const token = jwt.sign({ id: savedUser._id }, config.SECRET, {
           expiresIn: 86400, // 24 hours
         });
@@ -29,7 +24,6 @@ export const signUp = async (req, res) => {
 
 export const signIn = async (req, res) => {
     try {
-        // Request body email can be an email or username
         const userFound = await User.findOne({ email: req.body.email })
     
         if (!userFound) return res.status(400).json({ message: "Usuario No encontrado" });
@@ -46,7 +40,7 @@ export const signIn = async (req, res) => {
           });
     
         const token = jwt.sign({ id: userFound._id }, config.SECRET, {
-          expiresIn: 86400, // 24 hours
+          expiresIn: 86400, // 24 horas
         });
     
         res.json({ token:token,payload:userFound });

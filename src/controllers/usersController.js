@@ -20,7 +20,5 @@ export const getUserById = async (req, res) => {
         res.json({mensaje : 'Ese usuario no existe'});
         return next();
     }
-
-    // Mostrar el producto
     res.json(user);
 }
